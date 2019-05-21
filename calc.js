@@ -4,6 +4,8 @@ var numTwo = 0;
 var operatorUsed = "";
 var result = 0;
 var displayText = "";
+var numValue = "";
+
 // update display when press a number
 var digits = Array.from(document.querySelectorAll(".digit"));
 digits.forEach(digit => digit.addEventListener("click", e => {
@@ -61,12 +63,15 @@ function chooseOperator(operator) {
             operatorUsed = "divide";
             break;
     }
-    document.getElementById("calc-screen").value = operator;
+    document.getElementById("calc-screen").value = displayText;
     displayText = "";
 }
 
 
 function equals() {
+    if (operatorUsed === "") {
+        return;
+    }
     numTwo = Number(displayText);
     result = operate(operatorUsed, numOne, numTwo);
     document.getElementById("calc-screen").value = result;
