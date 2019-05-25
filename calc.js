@@ -5,6 +5,7 @@ var operatorUsed = "";
 var result = 0;
 var displayText = "";
 var numValue = "";
+var equalsPressed = false;
 
 // update display when press a number
 var digits = Array.from(document.querySelectorAll(".digit"));
@@ -18,14 +19,20 @@ clearButton.addEventListener("click", e => {
     allClear();
 })
 
+// equals event listener
 var equalsButton = document.querySelector(".equals");
 equalsButton.addEventListener("click", e => {
     equals();
 })
 
+// operator buttons event listener
 var operators = Array.from(document.querySelectorAll(".operator"));
 operators.forEach(operator => operator.addEventListener("click", e => {
-    if (numTwo === 0) {
+    if (equalsPressed === true) {
+        chooseOperator(operator.value)
+        numTwo = Number(displayText);
+    }
+    else if (numTwo === 0) {
         numOne = Number(displayText);
         numTwo = 1;
         chooseOperator(operator.value);
@@ -44,6 +51,7 @@ operators.forEach(operator => operator.addEventListener("click", e => {
     console.log(`displayText is: ${displayText}`);
 }))
 
+// function to store operator pressed
 function chooseOperator(operator) {
     switch (operator) {
         case "+":
@@ -67,7 +75,6 @@ function chooseOperator(operator) {
     displayText = "";
 }
 
-
 function equals() {
     if (operatorUsed === "") {
         return;
@@ -75,10 +82,8 @@ function equals() {
     numTwo = Number(displayText);
     result = operate(operatorUsed, numOne, numTwo);
     document.getElementById("calc-screen").value = result;
-    displayText = "";
-    numOne = 0;
-    numTwo = 0;
-    result = 0;
+    numOne = result;
+    equalsPressed = true;
 }
 
 
@@ -137,6 +142,9 @@ function operate (operator, numOne, numTwo) {
 }
 
 function display(buttonValue) {
+    if (equalsPressed === true && result !== 0 && numTwo !== 0) {
+        allClear();
+    }
     displayText = displayText + buttonValue;
     document.getElementById("calc-screen").value = displayText;
     console.log(displayText);
@@ -150,5 +158,6 @@ function allClear() {
     numTwo = 0;
     result = 0;
     operatorUsed = "";
+    equalsPressed = false;
     console.log(displayText, numOne, numTwo, result);
 }
