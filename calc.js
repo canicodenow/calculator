@@ -81,6 +81,10 @@ function equals() {
     }
     numTwo = Number(displayText);
     result = operate(operatorUsed, numOne, numTwo);
+    if (result % 1 !== 0) {
+        result = Number.parseFloat(result).toFixed(6);
+    }
+    // result = Number.parseFloat(operate(operatorUsed, numOne, numTwo)).toFixed(8);
     document.getElementById("calc-screen").value = result;
     numOne = result;
     equalsPressed = true;
