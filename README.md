@@ -2,6 +2,7 @@
 Create a working calculator in javaScript
 
 V2 - you can now carry on doing sums after pressing equals
+
 V3 = it should round so that all numbers fit in the display (partially done)
 
 
