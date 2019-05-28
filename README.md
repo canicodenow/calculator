@@ -12,4 +12,4 @@ V3 = it should round so that all numbers fit in the display (partially done)
 2. it should not let you divide by zero (give an error message)
 3. it should have a backspace button
 4. it should work with the keyboard (wes bos drumkit for help)
-6. it should allow one decimal point in a sum
+5. it should allow one decimal point in a sum

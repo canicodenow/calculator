@@ -7,11 +7,36 @@ var displayText = "";
 var numValue = "";
 var equalsPressed = false;
 
+// update display when press keypad number
+
+// var digitKeys = Array.from(document.querySelectorAll(".digit"));
+// digitKeys.forEach(digitKey => digitKey.addEventListener("keydown", e => {
+//     var keyPressed = Number(String.fromCharCode(e.keyCode));
+//     if(isNaN(keyPressed)) {
+//         return;
+//     }
+//     console.log(keyPressed);
+//     display(keyPressed);
+// }))
+
+var digitKeys = Array.from(document.querySelectorAll(".digit"));
+document.addEventListener("keydown", e => {
+    if (e.keyCode < 47 || e.keyCode > 58) {
+        return;
+    }
+    else {
+        var keyPressed = Number(String.fromCharCode(e.keyCode));
+    }
+    console.log(keyPressed);
+    display(keyPressed);
+})
+
 // update display when press a number
 var digits = Array.from(document.querySelectorAll(".digit"));
 digits.forEach(digit => digit.addEventListener("click", e => {
     display(e.target.value);
 }))
+
 
 // all clear event listener
 var clearButton = document.querySelector(".all-clear");
@@ -24,7 +49,11 @@ var equalsButton = document.querySelector(".equals");
 equalsButton.addEventListener("click", e => {
     equals();
 })
-
+document.addEventListener("keydown", e => {
+    if (e.keyCode === 13) {
+        e.preventDefault();
+        equals();
+    }})
 // operator buttons event listener
 var operators = Array.from(document.querySelectorAll(".operator"));
 operators.forEach(operator => operator.addEventListener("click", e => {
@@ -87,6 +116,7 @@ function equals() {
     // result = Number.parseFloat(operate(operatorUsed, numOne, numTwo)).toFixed(8);
     document.getElementById("calc-screen").value = result;
     numOne = result;
+    operatorUsed = "";
     equalsPressed = true;
 }
 
