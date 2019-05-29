@@ -108,6 +108,11 @@ function equals() {
     if (operatorUsed === "") {
         return;
     }
+    if (operatorUsed === "divide") {
+        allClear();
+        alert("I don't think so");
+        return;
+    }
     numTwo = Number(displayText);
     result = operate(operatorUsed, numOne, numTwo);
     if (result % 1 !== 0) {
