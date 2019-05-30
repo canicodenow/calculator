@@ -9,10 +9,15 @@ V4 = added keyboard support for digits and equals
 
 V5 = it does not let you divide by 0
 
+V6 = added keyboard support for operators
+
 
 //Todo
 
 1. the display should show the full entry (e.g. 44 + 5 - 6 * 3)
 2. it should have a backspace button
-3. it should work with the keyboard (wes bos drumkit for help)
-4. it should allow one decimal point in a sum
+3. it should allow one decimal point in a sum
+
+//Bugs:
+
+1. cannot chain the same operator (6 + 6 + 6 + 6) after pressing equals - I think the solution is to use a separate string for the display and the numbers I'm doing maths on.

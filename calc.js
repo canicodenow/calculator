@@ -7,31 +7,20 @@ var displayText = "";
 var numValue = "";
 var equalsPressed = false;
 
-// update display when press keypad number
-
-// var digitKeys = Array.from(document.querySelectorAll(".digit"));
-// digitKeys.forEach(digitKey => digitKey.addEventListener("keydown", e => {
-//     var keyPressed = Number(String.fromCharCode(e.keyCode));
-//     if(isNaN(keyPressed)) {
-//         return;
-//     }
-//     console.log(keyPressed);
-//     display(keyPressed);
-// }))
-
+// keyboard support for 0-9
 var digitKeys = Array.from(document.querySelectorAll(".digit"));
 document.addEventListener("keydown", e => {
-    if (e.keyCode < 47 || e.keyCode > 58) {
+    var keyPressed = "";
+    if (e.keyCode > 47 && e.keyCode < 58) {
+        keyPressed = Number(String.fromCharCode(e.keyCode));
+    } else {
         return;
-    }
-    else {
-        var keyPressed = Number(String.fromCharCode(e.keyCode));
     }
     console.log(keyPressed);
     display(keyPressed);
 })
 
-// update display when press a number
+// update display when press a number on screen
 var digits = Array.from(document.querySelectorAll(".digit"));
 digits.forEach(digit => digit.addEventListener("click", e => {
     display(e.target.value);
@@ -49,36 +38,92 @@ var equalsButton = document.querySelector(".equals");
 equalsButton.addEventListener("click", e => {
     equals();
 })
+
+// press return for equals
 document.addEventListener("keydown", e => {
     if (e.keyCode === 13) {
         e.preventDefault();
         equals();
     }})
+
+document.addEventListener("keydown", e => {
+    var operatorPressed = "";
+    if (e.key === '+' || e.key === '-' || e.key === '/' || e.key === '*') {
+        if (e.key === '*') {
+            operatorPressed = '*';
+            sliceEight();
+        } else {
+            operatorPressed = e.key;
+        }
+    } else {
+            return;
+    }
+    useOperators(operatorPressed);
+})
+
+function sliceEight() {
+    //debugger;
+    if (equalsPressed === false) {
+    displayText = Number(displayText.toString().slice(0, -1));
+    console.log(`displayText is ${displayText}`)
+    // } else if (equalsPressed === true) {
+    //     displayText = result;
+    // }
+}}
+
+
+
+//         } else return}
+//     if (equalsPressed === true) {
+//         chooseOperator(operatorPressed)
+//         numTwo = Number(displayText);
+//     }
+//     else if (numTwo === 0) {
+//         numOne = Number(displayText);
+//         numTwo = 1;
+//         chooseOperator(operatorPressed);
+//     }
+//     else if {
+//         numTwo = Number(displayText);
+//         result = operate(operatorUsed, numOne, numTwo);
+//         displayText = "";
+//         numOne = result;
+//         chooseOperator(operatorPressed);
+
+//     console.log(e.code);
+// })
+
 // operator buttons event listener
 var operators = Array.from(document.querySelectorAll(".operator"));
 operators.forEach(operator => operator.addEventListener("click", e => {
-    if (equalsPressed === true) {
-        chooseOperator(operator.value)
-        numTwo = Number(displayText);
-    }
-    else if (numTwo === 0) {
-        numOne = Number(displayText);
-        numTwo = 1;
-        chooseOperator(operator.value);
-    }
-    else {
-        numTwo = Number(displayText);
-        result = operate(operatorUsed, numOne, numTwo);
-        displayText = "";
-        numOne = result;
-        chooseOperator(operator.value);
-    }
-    console.log(`result is: ${result}`);
-    console.log(`numOne is: ${numOne}`);
-    console.log(`numTwo is: ${numTwo}`);
-    console.log(`operatorUsed is: ${operatorUsed}`);
-    console.log(`displayText is: ${displayText}`);
+    useOperators(operator.value);
 }))
+
+function useOperators(operatorChosen) {
+    // debugger;
+if (equalsPressed === true) {
+    chooseOperator(operatorChosen);
+    numTwo = Number(displayText);
+}
+else if (numTwo === 0) {
+    numOne = Number(displayText);
+    numTwo = 1;
+    chooseOperator(operatorChosen);
+}
+else {
+    numTwo = Number(displayText);
+    result = operate(operatorUsed, numOne, numTwo);
+    displayText = "";
+    numOne = result;
+    chooseOperator(operatorChosen);
+}
+console.log(`result is: ${result}`);
+console.log(`numOne is: ${numOne}`);
+console.log(`numTwo is: ${numTwo}`);
+console.log(`operatorUsed is: ${operatorUsed}`);
+console.log(`displayText is: ${displayText}`);
+console.log(`equalsPressed is: ${equalsPressed}`)
+}
 
 // function to store operator pressed
 function chooseOperator(operator) {
@@ -108,15 +153,15 @@ function equals() {
     if (operatorUsed === "") {
         return;
     }
-    if (operatorUsed === "divide") {
+    numTwo = Number(displayText);
+    result = operate(operatorUsed, numOne, numTwo);
+    // if (result % 1 !== 0) {
+    //     result = Number.parseFloat(result).toFixed(6);
+    // }
+    if (operatorUsed === "divide" && numTwo === 0) {
         allClear();
         alert("I don't think so");
         return;
-    }
-    numTwo = Number(displayText);
-    result = operate(operatorUsed, numOne, numTwo);
-    if (result % 1 !== 0) {
-        result = Number.parseFloat(result).toFixed(6);
     }
     // result = Number.parseFloat(operate(operatorUsed, numOne, numTwo)).toFixed(8);
     document.getElementById("calc-screen").value = result;
@@ -181,9 +226,9 @@ function operate (operator, numOne, numTwo) {
 }
 
 function display(buttonValue) {
-    if (equalsPressed === true && result !== 0 && numTwo !== 0) {
-        allClear();
-    }
+    // if (equalsPressed === true && result !== 0 && numTwo !== 0) {
+    //     allClear();
+    // }
     displayText = displayText + buttonValue;
     document.getElementById("calc-screen").value = displayText;
     console.log(displayText);
