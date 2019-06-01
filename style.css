@@ -81,12 +81,25 @@ button:hover {
     border-color: #000;
 }
 
+.backspace {
+    background-color: #02ff24;
+    border-color: #21742e;
+    color: #000;
+    grid-column-start: 4;
+    grid-row-start: 5;
+}
+
+.backspace:hover {
+    background-color: #02ff246d;
+    border-color: #000;
+}
+
 .equals {
     background-color: #2d43eb;
     border-color: #130b59;
     color: #fff;
     grid-column: 4 / 5;
-    grid-row: 2 / 6;
+    grid-row: 2 / 5;
     height: 100%;
 }
 

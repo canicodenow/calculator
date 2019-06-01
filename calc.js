@@ -153,6 +153,10 @@ function equals() {
     if (operatorUsed === "") {
         return;
     }
+
+    if (equalsPressed === false && numTwo === 0) {
+        return;
+    }
     numTwo = Number(displayText);
     result = operate(operatorUsed, numOne, numTwo);
     // if (result % 1 !== 0) {
@@ -167,6 +171,7 @@ function equals() {
     document.getElementById("calc-screen").value = result;
     numOne = result;
     operatorUsed = "";
+    numTwo = "0";
     equalsPressed = true;
 }
 
