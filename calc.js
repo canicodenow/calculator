@@ -46,8 +46,12 @@ document.addEventListener("keydown", e => {
         equals();
     }})
 
+// operator keyboard support
 document.addEventListener("keydown", e => {
     var operatorPressed = "";
+    if (e.key === 'Shift') {
+        e.preventDefault();
+    }
     if (e.key === '+' || e.key === '-' || e.key === '/' || e.key === '*') {
         if (e.key === '*') {
             operatorPressed = '*';
@@ -61,45 +65,25 @@ document.addEventListener("keydown", e => {
     useOperators(operatorPressed);
 })
 
-function sliceEight() {
-    //debugger;
-    if (equalsPressed === false) {
-    displayText = Number(displayText.toString().slice(0, -1));
-    console.log(`displayText is ${displayText}`)
-    // } else if (equalsPressed === true) {
-    //     displayText = result;
-    // }
-}}
-
-
-
-//         } else return}
-//     if (equalsPressed === true) {
-//         chooseOperator(operatorPressed)
-//         numTwo = Number(displayText);
-//     }
-//     else if (numTwo === 0) {
-//         numOne = Number(displayText);
-//         numTwo = 1;
-//         chooseOperator(operatorPressed);
-//     }
-//     else if {
-//         numTwo = Number(displayText);
-//         result = operate(operatorUsed, numOne, numTwo);
-//         displayText = "";
-//         numOne = result;
-//         chooseOperator(operatorPressed);
-
-//     console.log(e.code);
-// })
-
 // operator buttons event listener
 var operators = Array.from(document.querySelectorAll(".operator"));
 operators.forEach(operator => operator.addEventListener("click", e => {
     useOperators(operator.value);
 }))
 
-function useOperators(operatorChosen) {
+// backspace button event listener
+var backspaceButton = document.querySelector(".backspace");
+backspaceButton.addEventListener("click", e => {
+    backSpace();
+})
+
+//backspace key event listener
+document.addEventListener("keydown", e => {
+    if (e.key === "Backspace") {
+        backSpace();
+    }})
+
+function useOperators(operatorChosen) { 
     // debugger;
 if (equalsPressed === true) {
     chooseOperator(operatorChosen);
@@ -175,6 +159,23 @@ function equals() {
     equalsPressed = true;
 }
 
+function backSpace() {
+    if (displayText === "" && result === 0 && operatorUsed !== "") {
+        displayText = numOne;
+        numTwo = 0;
+        document.getElementById("calc-screen").value = displayText;
+        console.log(displayText);
+    } else {
+        displayText = displayText.toString().slice(0, -1);
+        document.getElementById("calc-screen").value = displayText;
+    }
+}
+
+// take off the 8 when Shift+8 is pressed for asterisk
+function sliceEight() {
+    displayText = Number(displayText.toString().slice(0, -1));
+    console.log(`displayText is ${displayText}`)
+}
 
 // function add ([...args]) {
 //     var added = 0;
